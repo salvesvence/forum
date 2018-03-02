@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    protected $guarded = [];
+
     /**
      * Get the user associated with the current Reply.
      *
