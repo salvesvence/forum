@@ -25,4 +25,14 @@ class Thread extends Model
     {
         return $this->hasMany(Reply::class);
     }
+
+    /**
+     * Get the user associated with the current Thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
