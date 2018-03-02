@@ -15,4 +15,14 @@ class Thread extends Model
     {
         return '/threads/' . $this->id;
     }
+
+    /**
+     * Return the replies associated with the current thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
 }
