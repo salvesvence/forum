@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class RepliesController extends Controller
 {
     /**
+     * RepliesController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->only('store');
+    }
+
+    /**
      * Store a new reply associated to a given thread.
      *
      * @param Thread $thread
