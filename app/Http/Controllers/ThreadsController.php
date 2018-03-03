@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 class ThreadsController extends Controller
 {
     /**
+     * ThreadsController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->only('store');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
