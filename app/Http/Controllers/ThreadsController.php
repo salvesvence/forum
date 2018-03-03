@@ -30,14 +30,33 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created thread.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $thread = Thread::create([
+                'user_id' => auth()->id(),
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+
+            session()->flash('The threads has been stored correctly.');
+
+            return redirect($thread->path());
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            session()->flash('The threads has not been stored correctly.');
+
+            return redirect()->back();
+        }
     }
 
     /**
