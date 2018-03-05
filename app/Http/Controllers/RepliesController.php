@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Channel;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -18,10 +19,11 @@ class RepliesController extends Controller
     /**
      * Store a new reply associated to a given thread.
      *
+     * @param $channelId
      * @param Thread $thread
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Thread $thread)
+    public function store($channelId, Thread $thread)
     {
         try {
 
