@@ -29,6 +29,16 @@ class Thread extends Model
     }
 
     /**
+     * Return the channel associated with the current thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function channel()
+    {
+        return $this->belongsTo(Channel::class);
+    }
+
+    /**
      * Get the user associated with the current Thread.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
