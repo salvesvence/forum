@@ -28,13 +28,13 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new thread.
      *
      * @return \Illuminate\Http\Response
      */
     public function create()
     {
-        //
+        return view('threads.create');
     }
 
     /**
