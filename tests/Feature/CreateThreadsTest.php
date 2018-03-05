@@ -34,6 +34,18 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    function guest_may_not_create_threads()
+    {
+        $this->withExceptionHandling();
+
+        $this->get(route('threads.create'))
+            ->assertRedirect('/login');
+
+        $this->post(route('threads.store'))
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
     function guest_cannot_see_the_create_thread_page()
     {
         $this->withExceptionHandling()
