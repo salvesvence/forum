@@ -28,6 +28,13 @@ class Thread extends Model
         return $this->hasMany(Reply::class);
     }
 
+    /**
+     * Filter the given threads query.
+     *
+     * @param $query
+     * @param $filters
+     * @return mixed
+     */
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
