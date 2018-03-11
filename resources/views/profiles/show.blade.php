@@ -9,7 +9,7 @@
             </h1>
         </div>
 
-        @foreach($profileUser->threads as $thread)
+        @foreach($threads as $thread)
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <div class="level">
@@ -25,5 +25,7 @@
                 </div>
             </div>
         @endforeach
+
+        {{ $threads->links() }}
     </div>
 @endsection
