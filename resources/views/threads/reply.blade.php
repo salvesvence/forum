@@ -1,12 +1,17 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="level">
-            <a href="#">
-                {{ $reply->owner->name }}
-            </a> said {{ $reply->created_at->diffForHumans() }}...
-            <div class="">
-                <form action="">
-                    <button type="submit" class="btn btn-default">Favorite</button>
+            <h5 class="flex">
+                <a href="#">
+                    {{ $reply->owner->name }}
+                </a> said {{ $reply->created_at->diffForHumans() }}...
+            </h5>
+            <div>
+                <form method="post" action="{{ route('favorites.store', ['reply' => $reply->id]) }}">
+                    {{ csrf_field() }}
+                    <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
+                        {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
+                    </button>
                 </form>
             </div>
         </div>

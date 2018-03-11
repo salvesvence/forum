@@ -20,9 +20,23 @@ class FavoritesController extends Controller
      * Store a new favorite element.
      *
      * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Reply $reply)
     {
-        $reply->favorite();
+        try {
+
+            $reply->favorite();
+
+            session()->flash('The reply is favorite now.');
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            session()->flash('The reply is NOT favorite, try again.');
+        }
+
+        return redirect()->back();
     }
 }
