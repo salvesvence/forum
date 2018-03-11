@@ -7,8 +7,12 @@
 
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="#">{{ $thread->creator->name }}</a> posted: {{ $thread->title }}</div>
-                    <div class="panel-body">{{ $thread->body }}</div>
+                        <a href="#">{{ $thread->creator->name }}</a> posted:
+                        {{ $thread->title }}
+                    </div>
+                    <div class="panel-body">
+                        {{ $thread->body }}
+                    </div>
                 </div>
 
                 @foreach($replies as $reply)

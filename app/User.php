@@ -34,4 +34,14 @@ class User extends Authenticatable
     {
         return 'name';
     }
+
+    /**
+     * Get all threads associated with the current user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function threads()
+    {
+        return $this->hasMany(Thread::class)->latest();
+    }
 }
