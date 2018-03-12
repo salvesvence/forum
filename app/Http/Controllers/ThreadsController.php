@@ -122,14 +122,26 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified thread from storage.
      *
-     * @param  \App\Thread  $thread
+     * @param $channel
+     * @param  \App\Thread $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($channel, Thread $thread)
     {
-        //
+        try {
+
+            $thread->delete();
+
+            return response([], 204);
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            return response([], $exception->getCode());
+        }
     }
 
     /**
