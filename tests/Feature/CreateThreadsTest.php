@@ -82,6 +82,12 @@ class CreateThreadsTest extends TestCase
     }
 
     /** @test */
+    function threads_may_only_be_deleted_by_those_who_have_permission()
+    {
+        // TODO
+    }
+
+    /** @test */
     function a_thread_can_be_deleted()
     {
         $this->signIn();
