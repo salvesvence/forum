@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Activity;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -87,8 +88,8 @@ class CreateThreadsTest extends TestCase
     {
         $this->signIn();
 
-        $thread =  create('App\Thread', ['user_id' => auth()->id()]);
-        $reply =  create('App\Reply', ['thread_id' => $thread->id]);
+        $thread = create('App\Thread', ['user_id' => auth()->id()]);
+        $reply = create('App\Reply', ['thread_id' => $thread->id]);
 
         $response = $this->json('DELETE', $thread->path());
 

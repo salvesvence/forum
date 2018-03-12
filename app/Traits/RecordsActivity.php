@@ -2,28 +2,41 @@
 
 namespace App\Traits;
 
-use App\Activity;
-
 trait RecordsActivity
 {
     protected static function bootRecordsActivity()
     {
-        static::created(function ($thread) {
-            $thread->recordsActivity('created');
-        });
+        if(auth()->guest()) return;
+
+        foreach (static::getRecordEvents() as $event) {
+            static::$event(function ($model) use ($event) {
+                $model->recordActivity($event);
+            });
+        }
+    }
+
+    protected static function getRecordEvents()
+    {
+        return ['created'];
     }
 
     /**
      * @param $event
      */
-    protected function recordsActivity($event)
+    protected function recordActivity($event)
     {
-        Activity::create([
+        $this->activity()->create([
             'user_id' => auth()->id(),
-            'type' => $this->getActivityType($event),
-            'subject_id' => $this->id,
-            'subject_type' => get_class($this)
+            'type' => $this->getActivityType($event)
         ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function activity()
+    {
+        return $this->morphMany('App\Activity', 'subject');
     }
 
     /**
