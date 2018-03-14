@@ -44,4 +44,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Thread::class)->latest();
     }
+
+    /**
+     * Get all activities associated with the current user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
+    }
 }
