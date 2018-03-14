@@ -23,4 +23,14 @@ class Reply extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    /**
+     * Get the thread associated with the current Reply.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function thread()
+    {
+        return $this->belongsTo(Thread::class);
+    }
 }
