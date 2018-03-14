@@ -23,10 +23,21 @@ class Activity extends Model
         return $this->morphTo();
     }
 
-    public static function feed(User $user)
+    /**
+     * Get all activities by the user given.
+     *
+     * @param User $user
+     * @param int $take
+     * @return mixed
+     */
+    public static function feed(User $user, $take = 50)
     {
-        return $user->activities()->latest()
-            ->with('subject')->get()->take(50)->groupBy(function ($activity) {
+        return static::where('user_id', $user->id)
+            ->latest()
+            ->with('subject')
+            ->get()
+            ->take($take)
+            ->groupBy(function ($activity) {
                 return $activity->created_at->format('Y-m-d');
             });
     }
