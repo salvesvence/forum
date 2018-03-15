@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Channel;
+use App\Reply;
 use App\Thread;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,15 @@ class RepliesController extends Controller
 
             session()->flash('flash', 'The reply has not been stored');
         }
+
+        return redirect()->back();
+    }
+
+    public function destroy(Reply $reply)
+    {
+        $this->authorize('delete', $reply);
+
+        $reply->delete();
 
         return redirect()->back();
     }
