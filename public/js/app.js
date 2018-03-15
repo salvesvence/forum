@@ -981,6 +981,12 @@ __webpack_require__(11);
 
 window.Vue = __webpack_require__(35);
 
+window.events = new Vue();
+
+window.flash = function (message) {
+  window.events.$emit('flash', message);
+};
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -43473,9 +43479,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
+        var _this = this;
+
         if (this.message) {
-            this.body = this.message;
+            this.flash(this.message);
+        }
+
+        window.events.$on('flash', function (message) {
+            return _this.flash(message);
+        });
+    },
+
+
+    methods: {
+        flash: function flash(message) {
+            this.body = message;
             this.show = true;
+
+            this.hide();
+        },
+        hide: function hide() {
+            var _this2 = this;
+
+            setTimeout(function () {
+                _this2.show = false;
+            }, 3000);
         }
     }
 });
@@ -43494,7 +43522,7 @@ var render = function() {
       directives: [
         { name: "show", rawName: "v-show", value: _vm.show, expression: "show" }
       ],
-      staticClass: "alert alert-warning alert-flash",
+      staticClass: "alert alert-success alert-flash",
       attrs: { role: "alert" }
     },
     [_c("strong", [_vm._v("Success!")]), _vm._v(" " + _vm._s(_vm.body) + "\n")]

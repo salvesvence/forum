@@ -19,7 +19,7 @@
 
         @yield('content')
 
-        <flash message="jsvhdk"></flash>
+        <flash message="{{ session('flash') }}"></flash>
     </div>
 
     <!-- Scripts -->

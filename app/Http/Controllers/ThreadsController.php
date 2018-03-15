@@ -69,17 +69,15 @@ class ThreadsController extends Controller
                 'body' => $request->body,
             ]);
 
-            session()->flash('The threads has been stored correctly.');
-
-            return redirect($thread->path());
+            return redirect($thread->path())
+                ->with('flash', 'The thread has been stored correctly.');
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            session()->flash('The threads has not been stored correctly.');
-
-            return redirect()->back();
+            return redirect()->back()
+                ->with('flash', 'The thread has not been stored correctly.');
         }
     }
 
