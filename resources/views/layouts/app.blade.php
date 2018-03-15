@@ -18,6 +18,8 @@
         @include('layouts.navbar')
 
         @yield('content')
+
+        <flash message="jsvhdk"></flash>
     </div>
 
     <!-- Scripts -->
