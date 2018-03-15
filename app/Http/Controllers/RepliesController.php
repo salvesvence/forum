@@ -47,11 +47,19 @@ class RepliesController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Delete the reply given.
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function destroy(Reply $reply)
     {
         $this->authorize('delete', $reply);
 
         $reply->delete();
+
+        session()->flash('flash', 'The reply has been deleted.');
 
         return redirect()->back();
     }
