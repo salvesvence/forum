@@ -28,13 +28,13 @@ class FavoritesController extends Controller
 
             $reply->favorite();
 
-            session()->flash('The reply is favorite now.');
+            session()->flash('flash', 'The reply is favorite now.');
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            session()->flash('The reply is NOT favorite, try again.');
+            session()->flash('flash', 'The reply is not favorite, try again.');
         }
 
         return redirect()->back();

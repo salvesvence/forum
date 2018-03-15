@@ -34,13 +34,13 @@ class RepliesController extends Controller
                 'user_id' => auth()->id()
             ]);
 
-            session()->flash('The thread has been stored');
+            session()->flash('flash', 'The reply has been stored');
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            session()->flash('The thread has not been stored');
+            session()->flash('flash', 'The reply has not been stored');
         }
 
         return redirect()->back();
