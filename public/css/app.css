@@ -8373,3 +8373,7 @@ body {
   margin-right: 1em;
 }
 
+[v-cloak] {
+  display: none;
+}
+
