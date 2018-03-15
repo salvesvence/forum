@@ -128,7 +128,6 @@ class ThreadsController extends Controller
      */
     public function destroy($channel, Thread $thread)
     {
-        dd('kk');
         $this->authorize('delete', $thread);
 
         $thread->delete();
