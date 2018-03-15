@@ -63,16 +63,14 @@ class RepliesController extends Controller
 
             $reply->update(['body' => request('body')]);
 
-            session()->flash('flash', 'The reply has been stored');
+            return response()->json(['message' => 'The reply has been updated.']);
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            session()->flash('flash', 'The reply has not been stored');
+            return response()->json(['message' => 'The reply has not been updated.']);
         }
-
-        return redirect()->back();
     }
 
     /**
