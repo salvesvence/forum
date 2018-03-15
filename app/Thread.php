@@ -9,6 +9,11 @@ class Thread extends Model
 {
     use RecordsActivity;
 
+    /**
+     * Don't auto-apply mass assignment protection.
+     *
+     * @var array
+     */
     protected $guarded = [];
 
     protected $with = ['creator', 'channel'];
