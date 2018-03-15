@@ -53,6 +53,7 @@ Route::prefix('threads')->group(function () {
         ->name('thread.replies.store');
 });
 
+Route::patch('replies/{reply}', 'RepliesController@update');
 Route::delete('replies/{reply}', 'RepliesController@destroy');
 
 Route::post('replies/{reply}/favorites', 'FavoritesController@store')

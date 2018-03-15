@@ -48,6 +48,34 @@ class RepliesController extends Controller
     }
 
     /**
+     * Store a new reply associated to a given thread.
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Reply $reply)
+    {
+        $this->authorize('update', $reply);
+
+        $this->validate(request(), ['body' => 'required']);
+
+        try {
+
+            $reply->update(['body' => request('body')]);
+
+            session()->flash('flash', 'The reply has been stored');
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            session()->flash('flash', 'The reply has not been stored');
+        }
+
+        return redirect()->back();
+    }
+
+    /**
      * Delete the reply given.
      *
      * @param Reply $reply
