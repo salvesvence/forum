@@ -39,4 +39,29 @@ class FavoritesController extends Controller
 
         return redirect()->back();
     }
+
+
+    /**
+     * Store a new favorite element.
+     *
+     * @param Reply $reply
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy(Reply $reply)
+    {
+        try {
+
+            $reply->unfavorite();
+
+            $message = 'The reply is favorite now.';
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            $message = 'The reply is not favorite, try again.';
+        }
+
+        return redirect()->back()->with('flash', $message);
+    }
 }

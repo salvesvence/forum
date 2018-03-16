@@ -19,6 +19,8 @@ class Reply extends Model
 
     protected $with = ['owner', 'favorites'];
 
+    protected $appends = ['favoritesCount', 'isFavorited'];
+
     /**
      * Get the user associated with the current Reply.
      *

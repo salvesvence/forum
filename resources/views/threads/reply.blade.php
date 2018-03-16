@@ -9,12 +9,11 @@
                     </a> said {{ $reply->created_at->diffForHumans() }}...
                 </h5>
                 <div>
-                    <form method="post" action="{{ route('favorites.store', ['reply' => $reply->id]) }}">
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-default" {{ $reply->isFavorited() ? 'disabled' : '' }}>
-                            {{ $reply->favorites_count }} {{ str_plural('Favorite', $reply->favorites_count) }}
-                        </button>
-                    </form>
+                    <favorite :reply="{{ $reply }}"></favorite>
+                    {{--<form method="post" action="{{ route('favorites.store', ['reply' => $reply->id]) }}">--}}
+                        {{--{{ csrf_field() }}--}}
+
+                    {{--</form>--}}
                 </div>
             </div>
         </div>
