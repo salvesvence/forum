@@ -10,10 +10,6 @@
                 </h5>
                 <div>
                     <favorite :reply="{{ $reply }}"></favorite>
-                    {{--<form method="post" action="{{ route('favorites.store', ['reply' => $reply->id]) }}">--}}
-                        {{--{{ csrf_field() }}--}}
-
-                    {{--</form>--}}
                 </div>
             </div>
         </div>

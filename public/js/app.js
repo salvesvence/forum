@@ -43729,22 +43729,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         classes: function classes() {
             return ['btn', this.isFavorite ? 'btn-primary' : 'btn-default'];
+        },
+        endpoint: function endpoint() {
+            return '/replies/' + this.reply.id + '/favorites';
         }
     },
 
     methods: {
         toggle: function toggle() {
-            if (this.isFavorite) {
-                axios.delete('/replies/' + this.reply.id + '/favorites');
+            return this.isFavorite ? this.destroy() : this.create();
+        },
+        create: function create() {
+            axios.post(this.endpoint);
 
-                this.isFavorite = false;
-                this.favoritesCount--;
-            } else {
-                axios.post('/replies/' + this.reply.id + '/favorites');
+            this.isFavorite = true;
+            this.favoritesCount++;
+        },
+        destroy: function destroy() {
+            axios.delete(this.endpoint);
 
-                this.isFavorite = true;
-                this.favoritesCount++;
-            }
+            this.isFavorite = false;
+            this.favoritesCount--;
         }
     }
 });
