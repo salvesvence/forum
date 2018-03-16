@@ -21,6 +21,23 @@
                 });
 
                 this.editing = false;
+            },
+
+            destroy() {
+
+                var message = '';
+
+                axios.delete('/replies/' + this.attributes.id)
+                .then(function (response) {
+                    message = response.data.message;
+                })
+                .catch(function (error) {
+                    message = error.data.message;
+                });
+
+                $(this.$el).fadeOut(300, () => {
+                    flash(message);
+                });
             }
         }
     }

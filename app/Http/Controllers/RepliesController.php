@@ -63,14 +63,20 @@ class RepliesController extends Controller
 
             $reply->update(['body' => request('body')]);
 
-            return response()->json(['message' => 'The reply has been updated.']);
+            $message = 'The reply has been updated.';
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            return response()->json(['message' => 'The reply has not been updated.']);
+            $message = 'The reply has not been updated.';
         }
+
+        if(request()->expectsJson()) {
+            return response()->json(['message' => $message]);
+        }
+
+        return redirect()->back()->with('flash', $message);
     }
 
     /**
@@ -83,10 +89,23 @@ class RepliesController extends Controller
     {
         $this->authorize('update', $reply);
 
-        $reply->delete();
+        try {
 
-        session()->flash('flash', 'The reply has been deleted.');
+            $reply->delete();
 
-        return redirect()->back();
+            $message = 'The reply has been deleted.';
+
+        } catch (\Exception $exception) {
+
+            \Log::error($exception->getMessage());
+
+            $message = 'The reply has not been deleted.';
+        }
+
+        if(request()->expectsJson()) {
+            return response()->json(['message' => $message]);
+        }
+
+        return redirect()->back()->with('flash', $message);
     }
 }

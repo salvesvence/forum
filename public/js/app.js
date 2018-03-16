@@ -43615,6 +43615,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             this.editing = false;
+        },
+        destroy: function destroy() {
+
+            var message = '';
+
+            axios.delete('/replies/' + this.attributes.id).then(function (response) {
+                message = response.data.message;
+            }).catch(function (error) {
+                message = error.data.message;
+            });
+
+            $(this.$el).fadeOut(300, function () {
+                flash(message);
+            });
         }
     }
 });
