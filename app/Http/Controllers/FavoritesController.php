@@ -62,6 +62,10 @@ class FavoritesController extends Controller
             $message = 'The reply is not favorite, try again.';
         }
 
+        if(request()->expectsJson()) {
+            return response()->json(['message' => $message]);
+        }
+
         return redirect()->back()->with('flash', $message);
     }
 }
