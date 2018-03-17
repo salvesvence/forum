@@ -1145,12 +1145,18 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  */
 
 var token = document.head.querySelector('meta[name="csrf-token"]');
-
 if (token) {
+
   window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+var signedIn = document.head.querySelector('meta[name="signed-in"]');
+window.signedIn = JSON.parse(signedIn.content);
+
+var user = document.head.querySelector('meta[name="user"]');
+window.user = JSON.parse(user.content);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -43800,10 +43806,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -43820,6 +43822,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+
+    computed: {
+        signedIn: function signedIn() {
+            return window.signedIn;
+        },
+        canUpdate: function canUpdate() {
+            return this.data.user_id == window.user.id;
+        }
+    },
 
     methods: {
         update: function update() {
@@ -44042,7 +44053,11 @@ var render = function() {
               domProps: { textContent: _vm._s(_vm.data.owner.name) }
             }),
             _vm._v(" said " + _vm._s(_vm.data.created_at) + "...\n            ")
-          ])
+          ]),
+          _vm._v(" "),
+          _vm.signedIn
+            ? _c("div", [_c("favorite", { attrs: { reply: _vm.data } })], 1)
+            : _vm._e()
         ])
       ]),
       _vm._v(" "),
@@ -44097,26 +44112,31 @@ var render = function() {
           : _c("div", { domProps: { textContent: _vm._s(_vm.body) } })
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "panel-footer level" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-default btn-xs mr-1",
-            on: {
-              click: function($event) {
-                _vm.editing = true
-              }
-            }
-          },
-          [_vm._v("Edit")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-danger btn-xs", on: { click: _vm.destroy } },
-          [_vm._v("Delete")]
-        )
-      ])
+      _vm.canUpdate
+        ? _c("div", { staticClass: "panel-footer level" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-default btn-xs mr-1",
+                on: {
+                  click: function($event) {
+                    _vm.editing = true
+                  }
+                }
+              },
+              [_vm._v("Edit")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger btn-xs",
+                on: { click: _vm.destroy }
+              },
+              [_vm._v("Delete")]
+            )
+          ])
+        : _vm._e()
     ]
   )
 }

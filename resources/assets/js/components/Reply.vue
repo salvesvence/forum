@@ -7,11 +7,9 @@
                        v-text="data.owner.name">
                     </a> said {{ data.created_at }}...
                 </h5>
-                <!--@if(auth()->check())-->
-                <!--<div>-->
-                    <!--<favorite :reply="{{ $reply }}"></favorite>-->
-                <!--</div>-->
-                <!--@endif-->
+                <div v-if="signedIn">
+                    <favorite :reply="data"></favorite>
+                </div>
             </div>
         </div>
 
@@ -26,12 +24,10 @@
             <div v-else v-text="body"></div>
         </div>
 
-        <!--@can('update', $reply)-->
-        <div class="panel-footer level">
+        <div class="panel-footer level" v-if="canUpdate">
             <button class="btn btn-default btn-xs mr-1" @click="editing = true">Edit</button>
             <button class="btn btn-danger btn-xs" @click="destroy">Delete</button>
         </div>
-        <!--@endcan-->
 
     </div>
 </template>
@@ -50,6 +46,16 @@
                 body: this.data.body,
                 id: this.data.id
             };
+        },
+
+        computed: {
+            signedIn() {
+                return window.signedIn;
+            },
+
+            canUpdate() {
+                return this.data.user_id == window.user.id;
+            }
         },
 
         methods: {

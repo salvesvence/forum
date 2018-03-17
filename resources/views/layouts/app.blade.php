@@ -12,6 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <meta name="signed-in" content="{{ Auth::check() }}">
+    <meta name="user" content="{{ Auth::user() }}">
 </head>
 <body>
     <div id="app">
