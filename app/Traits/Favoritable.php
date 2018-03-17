@@ -6,6 +6,13 @@ use App\Favorite;
 
 trait Favoritable
 {
+    protected static function bootFavoritable()
+    {
+        static::deleting(function ($model) {
+            $model->favorites->each->delete();
+        });
+    }
+
     /**
      * Get all favorite models.
      *
@@ -47,13 +54,15 @@ trait Favoritable
     }
 
     /**
-     * @return bool
+     * The model given stops being favorite.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function unfavorite()
     {
         $attributes = ['user_id' => auth()->id()];
 
-        return $this->favorites()->where($attributes)->delete();
+        return $this->favorites()->where($attributes)->get()->each->delete();
     }
 
     /**
