@@ -27,11 +27,12 @@
                     </div>
                 </div>
 
-                @foreach($replies as $reply)
-                    @include('threads.reply')
-                @endforeach
+                <replies :data="{{ $replies }}"></replies>
+                {{--@foreach($replies as $reply)--}}
+                    {{--@include('threads.reply')--}}
+                {{--@endforeach--}}
 
-                {{ $replies->links() }}
+                {{--{{ $replies->links() }}--}}
 
                 @if(auth()->check())
                     <form action="{{ route('thread.replies.store', ['channel' => $thread->channel->slug, 'thread' => $thread->id]) }}" method="post">
