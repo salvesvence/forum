@@ -51,6 +51,8 @@ Route::prefix('threads')->group(function () {
 
     Route::post('/{channel}/{thread}/replies', 'RepliesController@store')
         ->name('thread.replies.store');
+
+    Route::get('/{channel}/{thread}/replies', 'RepliesController@index');
 });
 
 Route::patch('replies/{reply}', 'RepliesController@update');
