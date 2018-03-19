@@ -46,7 +46,6 @@
             },
 
             refresh({data}) {
-                console.log(data);
                 this.dataSet = data;
                 this.items = data.data;
             }
