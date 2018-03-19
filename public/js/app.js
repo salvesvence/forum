@@ -43707,6 +43707,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         add: function add(reply) {
             this.items.push(reply);
+
+            this.$emit('added');
         },
         remove: function remove(index) {
             this.items.splice(index, 1);
