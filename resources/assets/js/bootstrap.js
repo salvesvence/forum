@@ -38,10 +38,10 @@ if (token) {
 }
 
 let signedIn = document.head.querySelector('meta[name="signed-in"]');
-window.signedIn = JSON.parse(signedIn.content);
+window.signedIn = signedIn.content != '' ? signedIn.content : false;
 
 let user = document.head.querySelector('meta[name="user"]');
-window.user = JSON.parse(user.content);
+window.user = user.content != '' ? JSON.parse(user.content) : null;
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
