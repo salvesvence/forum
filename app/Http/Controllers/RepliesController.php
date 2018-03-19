@@ -28,23 +28,32 @@ class RepliesController extends Controller
     {
         $this->validate(request(), ['body' => 'required']);
 
+        $reply = null;
+
         try {
 
-            $thread->replies()->create([
+            $reply = $thread->replies()->create([
                 'body' => request('body'),
                 'user_id' => auth()->id()
             ]);
 
-            session()->flash('flash', 'The reply has been stored');
+            $message = 'The reply has been stored';
 
         } catch (\Exception $exception) {
 
             \Log::error($exception->getMessage());
 
-            session()->flash('flash', 'The reply has not been stored');
+            $message = 'The reply has not been stored';
         }
 
-        return redirect()->back();
+        if(request()->expectsJson()) {
+            return response()->json([
+                'message' => $message,
+                'reply' => $reply->load('owner')
+            ]);
+        }
+
+        return redirect()->back()->with('flash', $message);
     }
 
     /**

@@ -62,10 +62,10 @@
             update() {
                 axios.patch('/replies/' + this.data.id, {
                     body: this.body
-                }).then(function (response) {
+                }).then(response => {
                     flash(response.data.message);
                 })
-                .catch(function (error) {
+                .catch(error => {
                     flash(error.data.message);
                 });
 
@@ -77,10 +77,10 @@
                 var message = '';
 
                 axios.delete('/replies/' + this.data.id)
-                .then(function (response) {
+                .then(response => {
                     message = response.data.message;
                 })
-                .catch(function (error) {
+                .catch(error => {
                     message = error.data.message;
                 });
 
