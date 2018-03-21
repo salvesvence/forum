@@ -79,6 +79,11 @@ class Thread extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * Subscribe the user given to the current thread.
+     *
+     * @param null $userId
+     */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
@@ -86,6 +91,23 @@ class Thread extends Model
         ]);
     }
 
+    /**
+     * Unsubscribe the user given to the current thread.
+     *
+     * @param null $userId
+     */
+    public function unsubscribe($userId = null)
+    {
+        $this->subscriptions()
+             ->where('user_id', $userId ?: auth()->id())
+             ->delete();
+    }
+
+    /**
+     * Get all subscriptions associated with the current Thread.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function subscriptions()
     {
         return $this->hasMany(ThreadSubscription::class);

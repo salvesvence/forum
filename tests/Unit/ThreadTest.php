@@ -65,4 +65,15 @@ class ThreadTest extends TestCase
 
         $this->assertEquals(1, $thread->subscriptions()->where('user_id', $userId)->count());
     }
+
+    /** @test */
+    public function a_thread_can_be_unsubscribed_from()
+    {
+        $thread = create('App\Thread');
+
+        $thread->subscribe($userId = 1);
+        $thread->unsubscribe($userId);
+
+        $this->assertEquals(0, $thread->subscriptions()->where('user_id', $userId)->count());
+    }
 }
