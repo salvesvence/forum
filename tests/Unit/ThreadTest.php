@@ -61,10 +61,8 @@ class ThreadTest extends TestCase
     {
         $thread = create('App\Thread');
 
-        $this->signIn();
+        $thread->subscribe($userId = 1);
 
-        $thread->subscribe();
-
-        $thread->subscriptions()->where('user_id', auth()->id())->get();
+        $this->assertEquals(1, $thread->subscriptions()->where('user_id', $userId)->count());
     }
 }
