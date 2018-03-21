@@ -17,9 +17,35 @@ class Reply extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
     protected $with = ['owner', 'favorites'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
     protected $appends = ['favoritesCount', 'isFavorited'];
+
+    /**
+     * Boot the reply instance.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($reply) {
+            $reply->thread->increment('replies_count');
+        });
+
+        static::deleted(function ($reply) {
+            $reply->thread->decrement('replies_count');
+        });
+    }
 
     /**
      * Get the user associated with the current Reply.
