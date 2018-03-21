@@ -78,4 +78,14 @@ class Thread extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function subscribe()
+    {
+
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(ThreadSubscription::class);
+    }
 }
