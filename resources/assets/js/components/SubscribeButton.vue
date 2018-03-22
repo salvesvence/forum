@@ -4,6 +4,10 @@
 
 <script>
     export default {
-
+        methods: {
+            subscribe() {
+                axios.post(location.pathname + '/subscriptions');
+            }
+        }
     }
 </script>
