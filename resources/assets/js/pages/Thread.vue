@@ -5,7 +5,7 @@
     export default {
         props: ['initialRepliesCount'],
 
-        components: { Replies },
+        components: { Replies, SubscribeButton },
 
         data() {
             return {
