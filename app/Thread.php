@@ -74,8 +74,7 @@ class Thread extends Model
 
         $this->subscriptions->filter(function ($subscription) use ($reply) {
             return $subscription->user_id != $reply->user_id;
-        })
-        ->each->notify($reply);
+        })->each->notify($reply);
 
         return $reply;
     }

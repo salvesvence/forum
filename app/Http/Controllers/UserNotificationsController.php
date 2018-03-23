@@ -20,6 +20,12 @@ class UserNotificationsController extends Controller
         return auth()->user()->notifications;
     }
 
+    /**
+     * Delete the notification given from the current logged user.
+     *
+     * @param User $user
+     * @param $notificationId
+     */
     public function destroy(User $user, $notificationId)
     {
         auth()->user()->notifications()->findOrFail($notificationId)->markAsRead();
