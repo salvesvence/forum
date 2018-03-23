@@ -12,6 +12,8 @@ class NotificationsTest extends TestCase
     /** @test */
     function a_notification_is_prepared_when_a_subscribed_thread_receives_a_new_reply_that_is_not_by_the_current_user()
     {
+        $this->signIn();
+
         $thread = create('App\Thread')->subscribe();
 
         $this->assertCount(0, auth()->user()->notifications);

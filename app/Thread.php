@@ -63,6 +63,24 @@ class Thread extends Model
     }
 
     /**
+     * Add a reply to the current thread.
+     *
+     * @param $reply
+     * @return Model
+     */
+    public function addReply($reply)
+    {
+        $reply = $this->replies()->create($reply);
+
+        $this->subscriptions->filter(function ($subscription) use ($reply) {
+            return $subscription->user_id != $reply->user_id;
+        })
+        ->each->notify($reply);
+
+        return $reply;
+    }
+
+    /**
      * Filter the given threads query.
      *
      * @param $query
@@ -98,24 +116,30 @@ class Thread extends Model
      * Subscribe the user given to the current thread.
      *
      * @param null $userId
+     * @return $this
      */
     public function subscribe($userId = null)
     {
         $this->subscriptions()->create([
             'user_id' => $userId ?: auth()->id()
         ]);
+
+        return $this;
     }
 
     /**
      * Unsubscribe the user given to the current thread.
      *
      * @param null $userId
+     * @return $this
      */
     public function unsubscribe($userId = null)
     {
         $this->subscriptions()
              ->where('user_id', $userId ?: auth()->id())
              ->delete();
+
+        return $this;
     }
 
     /**
