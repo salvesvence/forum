@@ -44,7 +44,7 @@ class RepliesController extends Controller
 
         try {
 
-            $reply = $thread->replies()->create([
+            $reply = $thread->addReply([
                 'body' => request('body'),
                 'user_id' => auth()->id()
             ]);
