@@ -12,4 +12,14 @@ class ThreadSubscription extends Model
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Get the user associated with the current thread subscription.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
