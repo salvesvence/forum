@@ -82,12 +82,12 @@ class ThreadTest extends TestCase
     {
         $thread = create('App\Thread');
 
-        $this->assertTrue($thread->isSubscribedTo());
-
         $this->signIn();
 
-        $thread->subscribe($userId = 1);
+        $this->assertFalse($thread->isSubscribedTo);
 
-        $this->assertTrue($thread->isSubscribedTo());
+        $thread->subscribe();
+
+        $this->assertTrue($thread->isSubscribedTo);
     }
 }

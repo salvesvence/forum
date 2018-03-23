@@ -14,9 +14,13 @@
 
         methods: {
             subscribe() {
-                axios.post(location.pathname + '/subscriptions')
+                let $this = this,
+                    requestType = $this.active ? 'delete' : 'post';
+
+                axios[requestType](location.pathname + '/subscriptions')
                     .then(response => {
                         flash(response.data.message);
+                        $this.active = ! $this.active;
                     })
                     .catch(error => {
                         flash(error.data.message);

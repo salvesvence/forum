@@ -16,8 +16,23 @@ class Thread extends Model
      */
     protected $guarded = [];
 
+    /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
     protected $with = ['creator', 'channel'];
 
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['isSubscribedTo'];
+
+    /**
+     * Boot the thread instance.
+     */
     protected static function boot()
     {
         parent::boot();

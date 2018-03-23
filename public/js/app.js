@@ -61118,8 +61118,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         subscribe: function subscribe() {
-            axios.post(location.pathname + '/subscriptions').then(function (response) {
+            var $this = this,
+                requestType = $this.active ? 'delete' : 'post';
+
+            axios[requestType](location.pathname + '/subscriptions').then(function (response) {
                 flash(response.data.message);
+                $this.active = !$this.active;
             }).catch(function (error) {
                 flash(error.data.message);
             });
