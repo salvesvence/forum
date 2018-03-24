@@ -79,6 +79,8 @@ class Thread extends Model
     }
 
     /**
+     * Notify to the subscriber users the creation of a new reply.
+     *
      * @param $reply
      */
     public function notifySubscribers($reply)
