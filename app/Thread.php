@@ -73,9 +73,20 @@ class Thread extends Model
     {
         $reply = $this->replies()->create($reply);
 
-        event(new ThreadHasNewReply($this, $reply));
+        $this->notifySubscribers($reply);
 
         return $reply;
+    }
+
+    /**
+     * @param $reply
+     */
+    public function notifySubscribers($reply)
+    {
+        $this->subscriptions
+            ->where('user_id', '!=', $reply->user_id)
+            ->each
+            ->notify($reply);
     }
 
     /**
