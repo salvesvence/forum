@@ -5,7 +5,7 @@
         </a>
         <ul class="dropdown-menu">
             <li v-for="notification in notifications">
-                <a href="#">Foobar</a>
+                <a :href="notification.data.link" v-text="notification.data.message" @click="markAsRead(notification )"></a>
             </li>
         </ul>
     </li>
@@ -15,13 +15,19 @@
     export default {
         data() {
             return {
-                notifications: ['sijd']
+                notifications: false
             }
         },
 
         created() {
-            axios.get('/profiles' + window.user.name + '/notifications')
+            axios.get('/profiles/' + window.user.name + '/notifications')
                     .then(response => this.notifications = response.data);
+        },
+
+        methods: {
+            markAsRead(notification) {
+                axios.delete('/profiles/' + window.user.name + '/notifications/' + notification.id);
+            }
         }
     }
 </script>
