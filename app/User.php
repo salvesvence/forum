@@ -54,4 +54,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Activity::class);
     }
+
+    /**
+     * Get the visited thread cache key.
+     *
+     * @param $thread
+     * @return string
+     */
+    public function visitedThreadCacheKey($thread)
+    {
+        return sprintf("users.%s.visits.%s", $this->id, $thread->id);
+    }
 }
