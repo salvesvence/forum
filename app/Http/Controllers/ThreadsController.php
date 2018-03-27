@@ -38,7 +38,7 @@ class ThreadsController extends Controller
     }
 
     /**
-     * Show the form for creating a new thread.
+     * Show the form for creating a new thread. 
      *
      * @return \Illuminate\Http\Response
      */
@@ -91,6 +91,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        if(auth()->check()) {
+            auth()->user()->read($thread);
+        }
+
         $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
 
         cache()->forever($key, Carbon::now());
