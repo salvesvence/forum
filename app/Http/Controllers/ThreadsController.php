@@ -6,6 +6,7 @@ use App\Channel;
 use App\Filters\ThreadFilters;
 use App\Thread;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ThreadsController extends Controller
@@ -90,6 +91,10 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
+        $key = sprintf("users.%s.visits.%s", auth()->id(), $thread->id);
+
+        cache()->forever($key, Carbon::now());
+
         return view('threads.show', compact('thread'));
     }
 
