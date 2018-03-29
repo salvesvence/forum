@@ -8,21 +8,21 @@ use App\Inspections\Spam;
 class SpamTest extends TestCase
 {
     /** @test */
-    public function it_check_invalid_keywords()
+    public function it_checks_for_invalid_keywords()
     {
-        $spam = new Spam;
+        $spam = new Spam();
 
         $this->assertFalse($spam->detect('Innocent reply here'));
 
         $this->expectException('Exception');
 
-        $spam->detect('yahoo reply support');
+        $spam->detect('yahoo customer support');
     }
 
     /** @test */
-    public function it_check_for_any_key_held_down()
+    function it_checks_for_any_key_being_held_down()
     {
-        $spam = new Spam;
+        $spam = new Spam();
 
         $this->expectException('Exception');
 
