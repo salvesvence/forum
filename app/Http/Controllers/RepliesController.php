@@ -40,7 +40,7 @@ class RepliesController extends Controller
     {
         $this->validate(request(), ['body' => 'required']);
 
-        $spam->detect(request('body'));
+        $this->validateReply();
 
         $reply = null;
 
@@ -74,13 +74,14 @@ class RepliesController extends Controller
      * Store a new reply associated to a given thread.
      *
      * @param Reply $reply
+     * @param Spam $spam
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Reply $reply)
+    public function update(Reply $reply, Spam $spam)
     {
         $this->authorize('update', $reply);
 
-        $this->validate(request(), ['body' => 'required']);
+        $this->validateReply();
 
         try {
 
@@ -130,5 +131,15 @@ class RepliesController extends Controller
         }
 
         return redirect()->back()->with('flash', $message);
+    }
+
+    /**
+     * Validate the current reply.
+     */
+    protected function validateReply()
+    {
+        $this->validate(request(), ['body' => 'required']);
+
+        resolve(Spam::class)->detect(request('body'));
     }
 }
