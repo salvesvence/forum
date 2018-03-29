@@ -13,13 +13,7 @@
             </div>
             <button type="submit" class="btn btn-default" @click="addReply">Post</button>
         </div>
-        <!--@if(auth()->check())-->
-        <!--<form action="{{ route('thread.replies.store', ['channel' => $thread->channel->slug, 'thread' => $thread->id]) }}" method="post">-->
-
-        <!--</form>-->
-        <!--@else-->
         <p class="text-center" v-else>Please <a href="/login">sign in</a> to participate in this discussion.</p>
-        <!--@endif-->
     </div>
 </template>
 
@@ -48,7 +42,7 @@
                         this.$emit('created', response.data.reply);
                     })
                     .catch(error => {
-                        flash(error.data.message);
+                        flash(error.response.data.message, 'danger');
                     });
             }
         }

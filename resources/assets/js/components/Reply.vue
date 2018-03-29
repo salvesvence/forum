@@ -71,7 +71,7 @@
                     flash(response.data.message);
                 })
                 .catch(error => {
-                    flash(error.data.message);
+                    flash(error.response.data.message, 'danger');
                 });
 
                 this.editing = false;
@@ -79,18 +79,19 @@
 
             destroy() {
 
-                var message = '';
+                var message = '',
+                    $this = this;
 
                 axios.delete('/replies/' + this.data.id)
                 .then(response => {
-                    message = response.data.message;
+                    $($this.$el).fadeOut(300, () => {
+                        flash(response.data.message);
+                    });
                 })
                 .catch(error => {
-                    message = error.data.message;
-                });
-
-                $(this.$el).fadeOut(300, () => {
-                    flash(message);
+                    $($this.$el).fadeOut(300, () => {
+                        flash(error.response.data.message, 'danger');
+                    });
                 });
 
                 this.$emit('deleted', this.data.id);

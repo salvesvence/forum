@@ -40,34 +40,23 @@ class RepliesController extends Controller
     {
         $this->validate(request(), ['body' => 'required']);
 
-        $this->validateReply();
-
-        $reply = null;
-
         try {
+
+            $this->validateReply();
 
             $reply = $thread->addReply([
                 'body' => request('body'),
                 'user_id' => auth()->id()
             ]);
 
-            $message = 'The reply has been stored';
-
-        } catch (\Exception $exception) {
-
-            \Log::error($exception->getMessage());
-
-            $message = 'The reply has not been stored';
-        }
-
-        if(request()->expectsJson()) {
             return response()->json([
-                'message' => $message,
+                'message' => 'The reply has been stored',
                 'reply' => $reply->load('owner')
             ]);
-        }
 
-        return redirect()->back()->with('flash', $message);
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()], 422);
+        }
     }
 
     /**
