@@ -11,6 +11,17 @@ class ReplyPolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can create threads.
+     *
+     * @param  \App\User  $user
+     * @return mixed
+     */
+    public function create(User $user)
+    {
+        return ! $user->lastReply->wasJustPublished();
+    }
+
+    /**
      * Determine whether the user can delete the reply.
      *
      * @param User $user
