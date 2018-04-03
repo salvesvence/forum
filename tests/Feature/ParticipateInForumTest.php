@@ -120,7 +120,6 @@ class ParticipateInForumTest extends TestCase
              ->assertStatus(422);
     }
 
-
     /** @test */
     public function users_may_only_reply_a_maximum_of_once_per_minute()
     {

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Traits\Favoritable;
 use App\Traits\RecordsActivity;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
@@ -65,6 +66,16 @@ class Reply extends Model
     public function thread()
     {
         return $this->belongsTo(Thread::class);
+    }
+
+    /**
+     * Return if the current reply was just published in the last minute.
+     *
+     * @return mixed
+     */
+    public function wasJustPublished()
+    {
+        return $this->created_at->gt(Carbon::now()->subMinute());
     }
 
     /**
