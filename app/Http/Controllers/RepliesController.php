@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Reply;
 use App\Thread;
-use App\Inspections\Spam;
 
 class RepliesController extends Controller
 {
@@ -33,16 +32,15 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
-     * @param Spam $spam
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, Spam $spam)
+    public function store($channelId, Thread $thread)
     {
         $this->validate(request(), ['body' => 'required']);
 
         try {
 
-            $this->validateReply();
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
             $reply = $thread->addReply([
                 'body' => request('body'),
@@ -63,16 +61,15 @@ class RepliesController extends Controller
      * Store a new reply associated to a given thread.
      *
      * @param Reply $reply
-     * @param Spam $spam
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Reply $reply, Spam $spam)
+    public function update(Reply $reply)
     {
         $this->authorize('update', $reply);
 
-        $this->validateReply();
-
         try {
+
+            $this->validate(request(), ['body' => 'required|spamfree']);
 
             $reply->update(['body' => request('body')]);
 
@@ -84,6 +81,7 @@ class RepliesController extends Controller
 
             $message = 'The reply has not been updated.';
         }
+
 
         if(request()->expectsJson()) {
             return response()->json(['message' => $message]);
@@ -120,15 +118,5 @@ class RepliesController extends Controller
         }
 
         return redirect()->back()->with('flash', $message);
-    }
-
-    /**
-     * Validate the current reply.
-     */
-    protected function validateReply()
-    {
-        $this->validate(request(), ['body' => 'required']);
-
-        resolve(Spam::class)->detect(request('body'));
     }
 }
