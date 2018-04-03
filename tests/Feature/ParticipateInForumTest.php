@@ -43,7 +43,7 @@ class ParticipateInForumTest extends TestCase
         $reply = make('App\Reply', ['body' => null]);
 
         $this->post($thread->path() . "/replies", $reply->toArray())
-             ->assertSessionHasErrors('body');
+            ->assertStatus(422);
     }
 
     /** @test */
