@@ -8,14 +8,6 @@ use Illuminate\Contracts\Validation\Rule;
 class SpamFree implements Rule
 {
     /**
-     * Create a new rule instance.
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Determine if the validation rule passes.
      *
      * @param  string  $attribute
@@ -38,6 +30,6 @@ class SpamFree implements Rule
      */
     public function message()
     {
-        return 'The validation error message.';
+        //
     }
 }
