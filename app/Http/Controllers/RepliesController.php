@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Forms\CreatePostForm;
+use App\Http\Forms\CreatePostRequest;
 use App\Reply;
 use App\Thread;
 use Illuminate\Support\Facades\Gate;
@@ -34,12 +35,20 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
-     * @param CreatePostForm $form
+     * @param CreatePostRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread, CreatePostForm $form)
+    public function store($channelId, Thread $thread, CreatePostRequest $request)
     {
-        return $form->persist($thread);
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id()
+        ]);
+
+        return response()->json([
+            'message' => 'The reply has been stored',
+            'reply' => $reply->load('owner')
+        ]);
     }
 
     /**
