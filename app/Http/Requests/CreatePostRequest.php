@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Forms;
+namespace App\Http\Requests;
 
 use App\Reply;
 use Illuminate\Support\Facades\Gate;

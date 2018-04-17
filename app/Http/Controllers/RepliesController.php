@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Forms\CreatePostForm;
-use App\Http\Forms\CreatePostRequest;
 use App\Reply;
 use App\Thread;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\CreatePostRequest;
 
 class RepliesController extends Controller
 {
