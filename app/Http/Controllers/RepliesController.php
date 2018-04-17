@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Forms\CreatePostForm;
 use App\Reply;
 use App\Thread;
 use Illuminate\Support\Facades\Gate;
@@ -33,33 +34,26 @@ class RepliesController extends Controller
      *
      * @param $channelId
      * @param Thread $thread
+     * @param CreatePostForm $form
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store($channelId, Thread $thread)
+    public function store($channelId, Thread $thread, CreatePostForm $form)
     {
-        if(Gate::denies('create', new Reply())) {
-            return response()->json([
-                'message' => 'You are posting too frequently. Please, take a break. :)'
-            ], 422);
-        }
+//        if(Gate::denies('create', new Reply())) {
+//            return response()->json([
+//                'message' => 'You are posting too frequently. Please, take a break. :)'
+//            ], 429);
+//        }
 
-        try {
+        $reply = $thread->addReply([
+            'body' => request('body'),
+            'user_id' => auth()->id()
+        ]);
 
-            $this->validate(request(), ['body' => 'required|spamfree']);
-
-            $reply = $thread->addReply([
-                'body' => request('body'),
-                'user_id' => auth()->id()
-            ]);
-
-            return response()->json([
-                'message' => 'The reply has been stored',
-                'reply' => $reply->load('owner')
-            ]);
-
-        } catch (\Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()], 422);
-        }
+        return response()->json([
+            'message' => 'The reply has been stored',
+            'reply' => $reply->load('owner')
+        ]);
     }
 
     /**
