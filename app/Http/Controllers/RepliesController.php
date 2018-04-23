@@ -45,7 +45,7 @@ class RepliesController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        preg_match_all('/\@([^\s\]+)/', $reply->body, $matches);
+        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
 
         $names = $matches[1];
 
@@ -53,7 +53,7 @@ class RepliesController extends Controller
             $user = User::whereName($name)->first();
 
             if($user) {
-                $user->notify(new YouWereMentioned);
+                $user->notify(new YouWereMentioned($reply));
             }
         }
 
