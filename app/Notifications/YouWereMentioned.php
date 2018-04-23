@@ -36,4 +36,18 @@ class YouWereMentioned extends Notification
     {
         return ['database'];
     }
+
+    /**
+     * Get the array representation of the notification.
+     *
+     * @param  mixed $notifiable
+     * @return array
+     */
+    public function toArray($notifiable)
+    {
+        return [
+            'message' => $this->reply->owner->name . ' mentioned you in ' . $this->reply->thread->title,
+            'link' => $this->reply->path()
+        ];
+    }
 }

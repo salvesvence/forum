@@ -45,18 +45,6 @@ class RepliesController extends Controller
             'user_id' => auth()->id()
         ]);
 
-        preg_match_all('/\@([^\s\.]+)/', $reply->body, $matches);
-
-        $names = $matches[1];
-
-        foreach ($names as $name) {
-            $user = User::whereName($name)->first();
-
-            if($user) {
-                $user->notify(new YouWereMentioned($reply));
-            }
-        }
-
         return response()->json([
             'message' => 'The reply has been stored',
             'reply' => $reply->load('owner')
