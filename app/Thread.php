@@ -76,22 +76,7 @@ class Thread extends Model
 
         event(new ThreadReceivedNewReply($reply));
 
-        $this->notifySubscribers($reply);
-
         return $reply;
-    }
-
-    /**
-     * Notify to the subscriber users the creation of a new reply.
-     *
-     * @param $reply
-     */
-    public function notifySubscribers($reply)
-    {
-        $this->subscriptions
-            ->where('user_id', '!=', $reply->user_id)
-            ->each
-            ->notify($reply);
     }
 
     /**
