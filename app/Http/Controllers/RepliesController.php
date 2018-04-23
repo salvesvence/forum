@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\YouWereMentioned;
 use App\Reply;
 use App\Thread;
 use App\Http\Requests\CreatePostRequest;
+use App\User;
 
 class RepliesController extends Controller
 {
@@ -42,6 +44,18 @@ class RepliesController extends Controller
             'body' => request('body'),
             'user_id' => auth()->id()
         ]);
+
+        preg_match_all('/\@([^\s\]+)/', $reply->body, $matches);
+
+        $names = $matches[1];
+
+        foreach ($names as $name) {
+            $user = User::whereName($name)->first();
+
+            if($user) {
+                $user->notify(new YouWereMentioned);
+            }
+        }
 
         return response()->json([
             'message' => 'The reply has been stored',
