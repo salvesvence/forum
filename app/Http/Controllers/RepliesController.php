@@ -76,7 +76,6 @@ class RepliesController extends Controller
             $message = 'The reply has not been updated.';
         }
 
-
         if(request()->expectsJson()) {
             return response()->json(['message' => $message]);
         }

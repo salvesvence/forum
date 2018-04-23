@@ -89,14 +89,28 @@ class Reply extends Model
     }
 
     /**
-     * Return all mentioned users in the current reply body.
+     * Fetch all mentioned users within the reply's body.
      *
-     * @return mixed
+     * @return array
      */
     public function mentionedUsers()
     {
-        preg_match_all('/\@([^\s\.]+)/', $this->body, $matches);
+        preg_match_all('/@([\w\-]+)/', $this->body, $matches);
 
         return $matches[1];
+    }
+
+    /**
+     * Set the body attribute.
+     *
+     * @param $body
+     */
+    public function setBodyAttribute($body)
+    {
+        $this->attributes['body'] = preg_replace(
+            '/@([\w\-]+)/',
+            '<a href="/profiles/$1">$0</a>',
+            $body
+        );
     }
 }
