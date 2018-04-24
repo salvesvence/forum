@@ -8,6 +8,8 @@ class UserAvatarController extends Controller
 {
     public function store()
     {
-
+        $this->validate(request(), [
+            'avatar' => ['required', 'image']
+        ]);
     }
 }
