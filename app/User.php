@@ -37,6 +37,14 @@ class User extends Authenticatable
     }
 
     /**
+     * @return string
+     */
+    public function getAvatarPathAttribute($value)
+    {
+        return "/storage/$value";
+    }
+
+    /**
      * Get all threads associated with the current user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -6,6 +6,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="page-header">
                     <h1>{{ $profileUser->name }}</h1>
+                    <img src="{{ asset($profileUser->avatar_path) }}" width="100" height="100" class="thumbnail">
                     @can('update', $profileUser)
                         <form method="post" action="{{ route('avatar', $profileUser->id) }}"
                               enctype="multipart/form-data">
