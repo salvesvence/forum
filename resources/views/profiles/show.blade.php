@@ -7,7 +7,14 @@
                 <div class="page-header">
                     <h1>{{ $profileUser->name }}</h1>
                     @can('update', $profileUser)
-                        ADD FORM HERE
+                        <form method="post" action="{{ route('avatar', $profileUser->id) }}"
+                              enctype="multipart/form-data">
+                            {{ csrf_field() }}
+                            <div class="form-group">
+                                <input class="form-control" type="file" name="avatar">
+                            </div>
+                            <button class="btn btn-primary" type="submit">Add Avatar</button>
+                        </form>
                     @endcan
                 </div>
 
